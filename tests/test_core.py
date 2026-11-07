@@ -69,3 +69,15 @@ def test_report_outputs(tmp_path, prices):
     assert p.exists() and p.stat().st_size > 10_000
     md = qc.report.to_markdown(qc.compare([res]))
     assert "| Sharpe |" in md
+
+
+def test_untraded_multi_asset_book_has_zero_turnover():
+    idx = pd.bdate_range("2020-01-01", periods=5)
+    px = pd.DataFrame({"A": [100, 110, 99, 120, 100], "B": [50.0] * 5}, idx)
+    rets = px.pct_change().fillna(0)
+    # End-of-day weights of a 50/50 book bought on day 0 and never traded.
+    units = pd.DataFrame({"A": 0.5 / 100, "B": 0.5 / 50}, index=idx)
+    val = units * px
+    w = val.div(val.sum(axis=1), axis=0)
+    res = qc.backtest(w, px, qc.CostModel(0, 0), lag=1)
+    assert np.allclose(res.turnover.iloc[2:], 0.0)

@@ -38,10 +38,10 @@ Multi-asset ETF universe (SPY, EFA, EEM, TLT, IEF, GLD, DBC, VNQ), daily data, 1
 
 | Metric | TSMOM walk-forward | TSMOM (10% vol) | SMA 50/200 | Equal Weight | SPY |
 |---|---:|---:|---:|---:|---:|
-| CAGR | 4.14% | 3.99% | 4.37% | 8.29% | 15.02% |
+| CAGR | 4.15% | 4.00% | 4.37% | 8.29% | 15.02% |
 | Ann. Vol | 10.63% | 10.57% | 7.69% | 10.95% | 17.58% |
-| Sharpe | 0.43 | 0.42 | 0.60 | 0.78 | 0.88 |
-| Max Drawdown | -17.27% | -27.81% | -17.85% | -20.45% | -33.72% |
+| Sharpe | 0.44 | 0.42 | 0.60 | 0.78 | 0.88 |
+| Max Drawdown | -17.26% | -27.81% | -17.85% | -20.45% | -33.72% |
 | Annual Cost Drag | 0.42% | 0.34% | 0.07% | 0.05% | 0.00% |
 
 **Reading the results honestly:** simple trend rules on this ETF universe have not beaten US equities since 2009, a period dominated by one of the strongest equity bull markets on record. The walk-forward run improves on the static TSMOM drawdown (-17% vs -28%) but not on return. QuantCore exists to surface exactly this kind of finding before capital is committed. Strategy research lives in the companion repositories below.
@@ -54,7 +54,7 @@ Multi-asset ETF universe (SPY, EFA, EEM, TLT, IEF, GLD, DBC, VNQ), daily data, 1
 git clone https://github.com/hcctbusiness/QuantCore.git
 cd QuantCore
 pip install -e ".[dev]"
-pytest -q                 # 7 tests
+pytest -q                 # 8 tests
 python examples/demo.py   # regenerates docs/
 ```
 

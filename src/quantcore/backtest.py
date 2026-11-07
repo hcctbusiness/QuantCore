@@ -76,10 +76,12 @@ def backtest(
     held = w.shift(lag).fillna(0.0)
 
     gross = (held * rets).sum(axis=1)
-    # Weights drift with returns between rebalances; turnover measured vs drifted book.
-    drifted = held.shift(1).fillna(0.0) * (1 + rets)
-    denom = (1 + (held.shift(1).fillna(0.0) * rets).sum(axis=1)).replace(0, np.nan)
-    drifted = drifted.div(denom, axis=0).fillna(0.0)
+    # held[t] earns rets[t]. By the time held[t] is set, the previous book held[t-1]
+    # has drifted with rets[t-1]; turnover is measured against that drifted book.
+    prev = held.shift(1).fillna(0.0)
+    r_prev = rets.shift(1).fillna(0.0)
+    denom = (1 + (prev * r_prev).sum(axis=1)).replace(0, np.nan)
+    drifted = (prev * (1 + r_prev)).div(denom, axis=0).fillna(0.0)
     turnover = (held - drifted).abs().sum(axis=1)
     short = held.clip(upper=0).abs().sum(axis=1)
     cost = turnover * costs.per_turn + short * costs.borrow_bps_annual / 1e4 / 252
