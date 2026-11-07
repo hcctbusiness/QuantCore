@@ -29,7 +29,7 @@ def tearsheet(returns: dict[str, pd.Series] | pd.Series, path: str | Path, title
     if isinstance(returns, pd.Series):
         returns = {returns.name or "strategy": returns}
     fig = plt.figure(figsize=(13, 13), dpi=110)
-    gs = fig.add_gridspec(4, 1, height_ratios=[2.2, 1, 1, 2.8], hspace=0.45)
+    gs = fig.add_gridspec(4, 1, height_ratios=[2.2, 1, 1, 2.8], hspace=0.45, top=0.93, bottom=0.05)
     ax1, ax2, ax3, ax4 = (fig.add_subplot(gs[i]) for i in range(4))
     for i, (n, r) in enumerate(returns.items()):
         c = PALETTE[i % len(PALETTE)]
@@ -51,8 +51,8 @@ def tearsheet(returns: dict[str, pd.Series] | pd.Series, path: str | Path, title
     ax4.set_title(f"Monthly returns (%) — {next(iter(returns))}", loc="left", fontweight="bold")
     for a in (ax1, ax2, ax3):
         a.grid(alpha=0.25); a.spines[["top", "right"]].set_visible(False)
-    fig.suptitle(title, fontsize=15, fontweight="bold", x=0.06, ha="left")
-    fig.text(0.99, 0.005, "HCCT Group · QuantCore", ha="right", fontsize=8, color="#7A7A7A")
+    fig.suptitle(title, fontsize=15, fontweight="bold", x=0.06, y=0.975, ha="left")
+    fig.text(0.99, 0.02, "HCCT Group · QuantCore", ha="right", fontsize=8, color="#7A7A7A")
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, bbox_inches="tight"); plt.close(fig)
     return path
