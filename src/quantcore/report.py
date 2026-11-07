@@ -37,7 +37,7 @@ def tearsheet(returns: dict[str, pd.Series] | pd.Series, path: str | Path, title
         ax1.plot((1 + r).cumprod(), color=c, lw=lw, label=f"{n}  (Sharpe {_m.sharpe(r):.2f})")
         ax2.plot(_m.drawdown(r), color=c, lw=lw)
         ax3.plot(_m.rolling_sharpe(r), color=c, lw=lw)
-    ax1.set_yscale("log"); ax1.set_title("Growth of $1 (log scale)", loc="left", fontweight="bold"); ax1.legend(frameon=False)
+    ax1.set_yscale("log"); _f = matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"); ax1.yaxis.set_major_formatter(_f); ax1.yaxis.set_minor_formatter(_f); ax1.set_title("Growth of $1 (log scale)", loc="left", fontweight="bold"); ax1.legend(frameon=False)
     ax2.set_title("Drawdown", loc="left", fontweight="bold"); ax2.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0))
     ax3.set_title("Rolling 1-year Sharpe", loc="left", fontweight="bold"); ax3.axhline(0, color="k", lw=0.6)
     first = next(iter(returns.values()))
