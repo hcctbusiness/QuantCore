@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantcore"
+version = "0.1.0"
+description = "Research-grade vectorized backtesting engine with costs, walk-forward testing and tearsheets."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Harry CHU", email = "257962672+hcctbusiness@users.noreply.github.com" }]
+maintainers = [{ name = "HCCT Group" }]
+keywords = ["quant", "backtesting", "trading", "portfolio", "finance"]
+dependencies = ["numpy>=1.24", "pandas>=2.0", "matplotlib>=3.7"]
+
+[project.optional-dependencies]
+data = ["yfinance>=0.2.40"]
+dev = ["pytest>=7", "yfinance>=0.2.40"]
+
+[project.urls]
+Homepage = "https://github.com/hcctbusiness/QuantCore"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
