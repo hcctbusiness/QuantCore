@@ -4,7 +4,7 @@ from __future__ import annotations
 import io
 import os
 from pathlib import Path
-from urllib.request import Request, urlopen
+from urllib.request import urlopen
 
 import pandas as pd
 
@@ -42,7 +42,7 @@ def fred(series: list[str] | str, start: str = "1990-01-01", refresh: bool = Fal
             df = pd.read_csv(path, index_col=0, parse_dates=True)
         else:
             url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={s}"
-            txt = urlopen(Request(url, headers={"User-Agent": "quantcore"}), timeout=30).read().decode()
+            txt = urlopen(url, timeout=30).read().decode()  # FRED stalls on custom UAs
             df = pd.read_csv(io.StringIO(txt), index_col=0, parse_dates=True, na_values=".")
             df.columns = [s]
             df.to_csv(path)
